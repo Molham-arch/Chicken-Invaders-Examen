@@ -1,0 +1,39 @@
+{
+  "name": "chicken-invaders-exam-edition",
+  "version": "1.0.0",
+  "description": "Two-level Chicken Invaders style HTML/CSS/JS exam game.",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:exe": "set CSC_IDENTITY_AUTO_DISCOVERY=false&& electron-builder --win portable",
+    "build:installer": "set CSC_IDENTITY_AUTO_DISCOVERY=false&& electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.exam.chickeninvaders",
+    "productName": "Chicken Invaders Exam Edition",
+    "files": [
+      "index.html",
+      "styles.css",
+      "game.js",
+      "electron-main.js",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "signAndEditExecutable": false,
+      "forceCodeSigning": false
+    },
+    "portable": {
+      "artifactName": "Chicken-Invaders-Exam-Edition.exe"
+    },
+    "nsis": {
+      "artifactName": "Chicken-Invaders-Exam-Edition-Setup.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  }
+}

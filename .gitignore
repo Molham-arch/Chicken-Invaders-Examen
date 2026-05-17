@@ -1,0 +1,13 @@
+node_modules/
+dist/
+docs/check-*/
+docs/fix-*/
+docs/inspect-*/
+docs/final-gdd-fix/
+docs/make-docent-gesprek/
+docs/placeholder-check/
+~$*.docx
+docs/~$*.docx
+*.log
+.DS_Store
+Thumbs.db
