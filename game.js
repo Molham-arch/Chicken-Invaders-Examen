@@ -12,12 +12,14 @@ const game = {
   level: 1,
   timeLeft: 180,
   lastTime: 0,
+  bullets: [],
   player: {
     x: canvas.width / 2,
     y: canvas.height - 90,
     width: 70,
     height: 52,
     speed: 430,
+    shootCooldown: 0,
   },
 };
 
@@ -25,6 +27,7 @@ const assets = {
   background: loadImage("assets/sprites/background.png"),
   ship: loadImage("assets/sprites/spaceship.png"),
   chicken: loadImage("assets/sprites/chicken.png"),
+  bullet: loadImage("assets/sprites/bullet.png"),
 };
 
 function loadImage(src) {
@@ -72,6 +75,23 @@ function drawPlayer() {
   ctx.fillRect(player.x - 25, player.y - 25, 50, 50);
 }
 
+function drawBullets() {
+  for (const bullet of game.bullets) {
+    if (assets.bullet.complete) {
+      ctx.drawImage(
+        assets.bullet,
+        bullet.x - bullet.width / 2,
+        bullet.y - bullet.height / 2,
+        bullet.width,
+        bullet.height
+      );
+    } else {
+      ctx.fillStyle = "white";
+      ctx.fillRect(bullet.x - 4, bullet.y - 14, 8, 28);
+    }
+  }
+}
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -80,6 +100,8 @@ function updatePlayer(deltaTime) {
   if (!game.started) return;
 
   const { player } = game;
+  player.shootCooldown = Math.max(0, player.shootCooldown - deltaTime);
+
   let directionX = 0;
   let directionY = 0;
 
@@ -95,6 +117,29 @@ function updatePlayer(deltaTime) {
 
   player.x = clamp(player.x, player.width / 2, canvas.width - player.width / 2);
   player.y = clamp(player.y, canvas.height * 0.45, canvas.height - player.height / 2);
+}
+
+function shootBullet() {
+  const { player } = game;
+  if (!game.started || player.shootCooldown > 0) return;
+
+  game.bullets.push({
+    x: player.x,
+    y: player.y - player.height / 2,
+    width: 14,
+    height: 28,
+    speed: 700,
+  });
+
+  player.shootCooldown = 0.22;
+}
+
+function updateBullets(deltaTime) {
+  for (const bullet of game.bullets) {
+    bullet.y -= bullet.speed * deltaTime;
+  }
+
+  game.bullets = game.bullets.filter((bullet) => bullet.y + bullet.height > 0);
 }
 
 function drawEnemyPreview() {
@@ -124,6 +169,7 @@ function render() {
   drawBackground();
   drawHud();
   drawEnemyPreview();
+  drawBullets();
   drawPlayer();
   drawStartText();
 }
@@ -133,17 +179,22 @@ function gameLoop(currentTime) {
   game.lastTime = currentTime;
 
   updatePlayer(deltaTime);
+  updateBullets(deltaTime);
   render();
   requestAnimationFrame(gameLoop);
 }
 
 startButton.addEventListener("click", () => {
   game.started = true;
-  statusText.textContent = "Move with WASD or arrow keys. Next step: add shooting.";
+  statusText.textContent = "Move with WASD or arrow keys. Shoot with Space.";
 });
 
 window.addEventListener("keydown", (event) => {
   pressedKeys.add(event.key.toLowerCase());
+
+  if (event.key === " ") {
+    shootBullet();
+  }
 
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) {
     event.preventDefault();

@@ -39,3 +39,13 @@
 **Resultaat:** Het ruimteschip kan bestuurd worden in het onderste deel van het scherm. Dit past bij de backlog-eis dat de speler de game of karakters moet kunnen besturen.
 
 **Volgende stap:** Shooting system toevoegen, zodat de speler kogels kan afvuren.
+
+## Dinsdag 19 mei 2026
+
+**Werk:** Shooting system toegevoegd. De speler kan nu met de spatiebalk kogels afvuren vanaf het ruimteschip.
+
+**Keuze:** Ik heb een cooldown toegevoegd, zodat de speler niet onbeperkt veel kogels tegelijk kan spammen. Kogels bewegen omhoog en worden automatisch verwijderd wanneer ze uit beeld zijn.
+
+**Resultaat:** De speler kan nu bewegen en schieten. Dit is de basis voor het aanvallen van vijanden in de volgende stap.
+
+**Volgende stap:** Enemy waves toevoegen, zodat er echte doelen zijn om op te schieten.
