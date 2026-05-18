@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const startButton = document.querySelector("#startButton");
 const statusText = document.querySelector("#statusText");
+const pressedKeys = new Set();
 
 const game = {
   started: false,
@@ -10,11 +11,13 @@ const game = {
   health: 3,
   level: 1,
   timeLeft: 180,
+  lastTime: 0,
   player: {
     x: canvas.width / 2,
     y: canvas.height - 90,
     width: 70,
     height: 52,
+    speed: 430,
   },
 };
 
@@ -69,6 +72,31 @@ function drawPlayer() {
   ctx.fillRect(player.x - 25, player.y - 25, 50, 50);
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function updatePlayer(deltaTime) {
+  if (!game.started) return;
+
+  const { player } = game;
+  let directionX = 0;
+  let directionY = 0;
+
+  if (pressedKeys.has("arrowleft") || pressedKeys.has("a")) directionX -= 1;
+  if (pressedKeys.has("arrowright") || pressedKeys.has("d")) directionX += 1;
+  if (pressedKeys.has("arrowup") || pressedKeys.has("w")) directionY -= 1;
+  if (pressedKeys.has("arrowdown") || pressedKeys.has("s")) directionY += 1;
+
+  // Normalize diagonal movement so moving sideways and diagonally has the same speed.
+  const length = Math.hypot(directionX, directionY) || 1;
+  player.x += (directionX / length) * player.speed * deltaTime;
+  player.y += (directionY / length) * player.speed * deltaTime;
+
+  player.x = clamp(player.x, player.width / 2, canvas.width - player.width / 2);
+  player.y = clamp(player.y, canvas.height * 0.45, canvas.height - player.height / 2);
+}
+
 function drawEnemyPreview() {
   if (!assets.chicken.complete) return;
 
@@ -100,10 +128,30 @@ function render() {
   drawStartText();
 }
 
+function gameLoop(currentTime) {
+  const deltaTime = Math.min(0.033, (currentTime - game.lastTime) / 1000 || 0);
+  game.lastTime = currentTime;
+
+  updatePlayer(deltaTime);
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
 startButton.addEventListener("click", () => {
   game.started = true;
-  statusText.textContent = "Game started. Next step: add movement and shooting.";
-  render();
+  statusText.textContent = "Move with WASD or arrow keys. Next step: add shooting.";
 });
 
-render();
+window.addEventListener("keydown", (event) => {
+  pressedKeys.add(event.key.toLowerCase());
+
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) {
+    event.preventDefault();
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  pressedKeys.delete(event.key.toLowerCase());
+});
+
+requestAnimationFrame(gameLoop);

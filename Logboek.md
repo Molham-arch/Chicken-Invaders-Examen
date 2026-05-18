@@ -30,3 +30,12 @@
 
 **Volgende stap:** Game verder opdelen in duidelijke commits: player movement, shooting, enemies, UI, levels, testing en final polish.
 
+## Maandag 18 mei 2026
+
+**Werk:** Player movement toegevoegd aan de starter game. De speler kan nu bewegen met WASD en de pijltjestoetsen.
+
+**Keuze:** Ik heb de beweging begrensd binnen het speelveld, zodat het ruimteschip niet buiten het scherm kan gaan. Diagonale beweging is genormaliseerd, zodat de speler niet sneller beweegt wanneer twee toetsen tegelijk worden ingedrukt.
+
+**Resultaat:** Het ruimteschip kan bestuurd worden in het onderste deel van het scherm. Dit past bij de backlog-eis dat de speler de game of karakters moet kunnen besturen.
+
+**Volgende stap:** Shooting system toevoegen, zodat de speler kogels kan afvuren.
