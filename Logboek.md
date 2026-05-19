@@ -49,3 +49,13 @@
 **Resultaat:** De speler kan nu bewegen en schieten. Dit is de basis voor het aanvallen van vijanden in de volgende stap.
 
 **Volgende stap:** Enemy waves toevoegen, zodat er echte doelen zijn om op te schieten.
+
+## Woensdag 20 mei 2026
+
+**Werk:** Enemy wave toegevoegd. De kippen worden nu als echte enemy objects aangemaakt wanneer de game start.
+
+**Keuze:** Ik heb de vijanden als een groep laten bewegen van links naar rechts. Wanneer de groep de rand van het scherm raakt, draaien de vijanden om en zakken ze een klein stukje naar beneden.
+
+**Resultaat:** De game heeft nu bewegende vijanden in plaats van alleen een statische preview. Dit is de basis voor collisions en score.
+
+**Volgende stap:** Collision detection toevoegen tussen bullets en enemies, zodat de speler kippen kan raken.

@@ -13,6 +13,8 @@ const game = {
   timeLeft: 180,
   lastTime: 0,
   bullets: [],
+  enemies: [],
+  enemyDirection: 1,
   player: {
     x: canvas.width / 2,
     y: canvas.height - 90,
@@ -142,11 +144,59 @@ function updateBullets(deltaTime) {
   game.bullets = game.bullets.filter((bullet) => bullet.y + bullet.height > 0);
 }
 
-function drawEnemyPreview() {
-  if (!assets.chicken.complete) return;
+function createEnemyWave() {
+  game.enemies = [];
 
-  for (let i = 0; i < 5; i += 1) {
-    ctx.drawImage(assets.chicken, 380 + i * 110, 80, 74, 60);
+  const columns = 6;
+  const startX = canvas.width / 2 - ((columns - 1) * 110) / 2;
+
+  for (let i = 0; i < columns; i += 1) {
+    game.enemies.push({
+      x: startX + i * 110,
+      y: 96,
+      width: 74,
+      height: 60,
+      speed: 80,
+    });
+  }
+}
+
+function updateEnemies(deltaTime) {
+  if (!game.started || game.enemies.length === 0) return;
+
+  let shouldTurn = false;
+
+  for (const enemy of game.enemies) {
+    enemy.x += game.enemyDirection * enemy.speed * deltaTime;
+
+    if (enemy.x < enemy.width / 2 || enemy.x > canvas.width - enemy.width / 2) {
+      shouldTurn = true;
+    }
+  }
+
+  if (shouldTurn) {
+    game.enemyDirection *= -1;
+
+    for (const enemy of game.enemies) {
+      enemy.y += 18;
+    }
+  }
+}
+
+function drawEnemies() {
+  for (const enemy of game.enemies) {
+    if (assets.chicken.complete) {
+      ctx.drawImage(
+        assets.chicken,
+        enemy.x - enemy.width / 2,
+        enemy.y - enemy.height / 2,
+        enemy.width,
+        enemy.height
+      );
+    } else {
+      ctx.fillStyle = "#ffdf5d";
+      ctx.fillRect(enemy.x - 30, enemy.y - 24, 60, 48);
+    }
   }
 }
 
@@ -168,7 +218,7 @@ function drawStartText() {
 function render() {
   drawBackground();
   drawHud();
-  drawEnemyPreview();
+  drawEnemies();
   drawBullets();
   drawPlayer();
   drawStartText();
@@ -180,13 +230,15 @@ function gameLoop(currentTime) {
 
   updatePlayer(deltaTime);
   updateBullets(deltaTime);
+  updateEnemies(deltaTime);
   render();
   requestAnimationFrame(gameLoop);
 }
 
 startButton.addEventListener("click", () => {
   game.started = true;
-  statusText.textContent = "Move with WASD or arrow keys. Shoot with Space.";
+  createEnemyWave();
+  statusText.textContent = "Enemy wave spawned. Next step: bullet collisions.";
 });
 
 window.addEventListener("keydown", (event) => {
