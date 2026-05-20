@@ -144,6 +144,30 @@ function updateBullets(deltaTime) {
   game.bullets = game.bullets.filter((bullet) => bullet.y + bullet.height > 0);
 }
 
+function objectsOverlap(first, second) {
+  return (
+    Math.abs(first.x - second.x) < (first.width + second.width) / 2 &&
+    Math.abs(first.y - second.y) < (first.height + second.height) / 2
+  );
+}
+
+function checkBulletEnemyCollisions() {
+  for (let bulletIndex = game.bullets.length - 1; bulletIndex >= 0; bulletIndex -= 1) {
+    const bullet = game.bullets[bulletIndex];
+
+    for (let enemyIndex = game.enemies.length - 1; enemyIndex >= 0; enemyIndex -= 1) {
+      const enemy = game.enemies[enemyIndex];
+
+      if (!objectsOverlap(bullet, enemy)) continue;
+
+      game.bullets.splice(bulletIndex, 1);
+      game.enemies.splice(enemyIndex, 1);
+      game.score += 100;
+      break;
+    }
+  }
+}
+
 function createEnemyWave() {
   game.enemies = [];
 
@@ -231,6 +255,7 @@ function gameLoop(currentTime) {
   updatePlayer(deltaTime);
   updateBullets(deltaTime);
   updateEnemies(deltaTime);
+  checkBulletEnemyCollisions();
   render();
   requestAnimationFrame(gameLoop);
 }
@@ -238,7 +263,7 @@ function gameLoop(currentTime) {
 startButton.addEventListener("click", () => {
   game.started = true;
   createEnemyWave();
-  statusText.textContent = "Enemy wave spawned. Next step: bullet collisions.";
+  statusText.textContent = "Shoot chickens to score points. Next step: win and lose states.";
 });
 
 window.addEventListener("keydown", (event) => {

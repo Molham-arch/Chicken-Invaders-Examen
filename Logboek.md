@@ -59,3 +59,13 @@
 **Resultaat:** De game heeft nu bewegende vijanden in plaats van alleen een statische preview. Dit is de basis voor collisions en score.
 
 **Volgende stap:** Collision detection toevoegen tussen bullets en enemies, zodat de speler kippen kan raken.
+
+## Donderdag 21 mei 2026
+
+**Werk:** Collision detection toegevoegd tussen bullets en enemies. Wanneer een kogel een kip raakt, verdwijnen de kogel en de kip.
+
+**Keuze:** Ik gebruik eenvoudige rectangle-collision op basis van de positie en afmetingen van objecten. Dit is duidelijk en past goed bij deze 2D canvas game.
+
+**Resultaat:** De speler kan nu vijanden raken en krijgt scorepunten per geraakte kip. De score in de HUD verandert tijdens het spelen.
+
+**Volgende stap:** Win- en lose-states toevoegen, zodat de speler echt kan winnen of verliezen.
