@@ -69,3 +69,13 @@
 **Resultaat:** De speler kan nu vijanden raken en krijgt scorepunten per geraakte kip. De score in de HUD verandert tijdens het spelen.
 
 **Volgende stap:** Win- en lose-states toevoegen, zodat de speler echt kan winnen of verliezen.
+
+## Vrijdag 22 mei 2026
+
+**Werk:** Win- en lose-states toegevoegd. De speler wint wanneer alle kippen zijn geraakt en verliest wanneer de timer op 0 komt.
+
+**Keuze:** Ik heb een simpele game state gebruikt met `menu`, `playing`, `won` en `lost`. De startknop wordt ook gebruikt om opnieuw te starten na winst of verlies.
+
+**Resultaat:** De game heeft nu een duidelijk begin, speelstatus, win condition, lose condition en restart mogelijkheid. Dit vult meerdere Must-eisen uit de backlog in.
+
+**Volgende stap:** Health en vijandelijke eieren toevoegen, zodat de speler ook door vijanden geraakt kan worden.

@@ -6,7 +6,7 @@ const statusText = document.querySelector("#statusText");
 const pressedKeys = new Set();
 
 const game = {
-  started: false,
+  state: "menu",
   score: 0,
   health: 3,
   level: 1,
@@ -49,11 +49,15 @@ function drawBackground() {
 }
 
 function drawHud() {
+  const safeTime = Math.ceil(game.timeLeft);
+  const minutes = Math.floor(safeTime / 60);
+  const seconds = (safeTime % 60).toString().padStart(2, "0");
+
   ctx.fillStyle = "white";
   ctx.font = "bold 28px Arial";
   ctx.fillText(`Score: ${game.score}`, 40, 58);
   ctx.fillText(`Health: ${game.health}`, 40, 98);
-  ctx.fillText(`Time: 3:00`, 40, 138);
+  ctx.fillText(`Time: ${minutes}:${seconds}`, 40, 138);
 
   ctx.fillStyle = "#35ff28";
   ctx.fillText(`*Level ${game.level}*`, 40, canvas.height - 34);
@@ -99,7 +103,7 @@ function clamp(value, min, max) {
 }
 
 function updatePlayer(deltaTime) {
-  if (!game.started) return;
+  if (game.state !== "playing") return;
 
   const { player } = game;
   player.shootCooldown = Math.max(0, player.shootCooldown - deltaTime);
@@ -123,7 +127,7 @@ function updatePlayer(deltaTime) {
 
 function shootBullet() {
   const { player } = game;
-  if (!game.started || player.shootCooldown > 0) return;
+  if (game.state !== "playing" || player.shootCooldown > 0) return;
 
   game.bullets.push({
     x: player.x,
@@ -186,7 +190,7 @@ function createEnemyWave() {
 }
 
 function updateEnemies(deltaTime) {
-  if (!game.started || game.enemies.length === 0) return;
+  if (game.state !== "playing" || game.enemies.length === 0) return;
 
   let shouldTurn = false;
 
@@ -225,7 +229,7 @@ function drawEnemies() {
 }
 
 function drawStartText() {
-  if (game.started) return;
+  if (game.state === "playing") return;
 
   ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -233,10 +237,49 @@ function drawStartText() {
   ctx.fillStyle = "white";
   ctx.textAlign = "center";
   ctx.font = "bold 46px Arial";
-  ctx.fillText("Chicken Invaders", canvas.width / 2, canvas.height / 2 - 20);
+  const title = game.state === "won" ? "You Win!" : game.state === "lost" ? "Game Over" : "Chicken Invaders";
+  ctx.fillText(title, canvas.width / 2, canvas.height / 2 - 20);
   ctx.font = "24px Arial";
-  ctx.fillText("Starter version: movement, shooting and enemies will be added next.", canvas.width / 2, canvas.height / 2 + 26);
+  const message =
+    game.state === "won"
+      ? `Final score: ${game.score}. Press Start to play again.`
+      : game.state === "lost"
+        ? `Time is over. Final score: ${game.score}. Press Start to retry.`
+        : "Starter version: movement, shooting and enemies will be added next.";
+  ctx.fillText(message, canvas.width / 2, canvas.height / 2 + 26);
   ctx.textAlign = "left";
+}
+
+function resetGame() {
+  game.state = "playing";
+  game.score = 0;
+  game.health = 3;
+  game.level = 1;
+  game.timeLeft = 180;
+  game.bullets = [];
+  game.enemyDirection = 1;
+  game.player.x = canvas.width / 2;
+  game.player.y = canvas.height - 90;
+  game.player.shootCooldown = 0;
+  createEnemyWave();
+}
+
+function updateGameState(deltaTime) {
+  if (game.state !== "playing") return;
+
+  game.timeLeft = Math.max(0, game.timeLeft - deltaTime);
+
+  if (game.enemies.length === 0) {
+    game.state = "won";
+    startButton.textContent = "Play Again";
+    statusText.textContent = "You defeated all chickens. You can restart the game.";
+  }
+
+  if (game.timeLeft <= 0) {
+    game.state = "lost";
+    startButton.textContent = "Try Again";
+    statusText.textContent = "Time is over. Restart and try to clear the wave faster.";
+  }
 }
 
 function render() {
@@ -256,14 +299,15 @@ function gameLoop(currentTime) {
   updateBullets(deltaTime);
   updateEnemies(deltaTime);
   checkBulletEnemyCollisions();
+  updateGameState(deltaTime);
   render();
   requestAnimationFrame(gameLoop);
 }
 
 startButton.addEventListener("click", () => {
-  game.started = true;
-  createEnemyWave();
-  statusText.textContent = "Shoot chickens to score points. Next step: win and lose states.";
+  resetGame();
+  startButton.textContent = "Restart";
+  statusText.textContent = "Clear the wave before the timer reaches zero.";
 });
 
 window.addEventListener("keydown", (event) => {
