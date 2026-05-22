@@ -13,8 +13,10 @@ const game = {
   timeLeft: 180,
   lastTime: 0,
   bullets: [],
+  eggs: [],
   enemies: [],
   enemyDirection: 1,
+  enemyShootTimer: 1.5,
   player: {
     x: canvas.width / 2,
     y: canvas.height - 90,
@@ -22,6 +24,7 @@ const game = {
     height: 52,
     speed: 430,
     shootCooldown: 0,
+    invincibleTimer: 0,
   },
 };
 
@@ -30,6 +33,7 @@ const assets = {
   ship: loadImage("assets/sprites/spaceship.png"),
   chicken: loadImage("assets/sprites/chicken.png"),
   bullet: loadImage("assets/sprites/bullet.png"),
+  egg: loadImage("assets/sprites/egg.png"),
 };
 
 function loadImage(src) {
@@ -98,6 +102,25 @@ function drawBullets() {
   }
 }
 
+function drawEggs() {
+  for (const egg of game.eggs) {
+    if (assets.egg.complete) {
+      ctx.drawImage(
+        assets.egg,
+        egg.x - egg.width / 2,
+        egg.y - egg.height / 2,
+        egg.width,
+        egg.height
+      );
+    } else {
+      ctx.fillStyle = "#fff6c7";
+      ctx.beginPath();
+      ctx.ellipse(egg.x, egg.y, egg.width / 2, egg.height / 2, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -107,6 +130,7 @@ function updatePlayer(deltaTime) {
 
   const { player } = game;
   player.shootCooldown = Math.max(0, player.shootCooldown - deltaTime);
+  player.invincibleTimer = Math.max(0, player.invincibleTimer - deltaTime);
 
   let directionX = 0;
   let directionY = 0;
@@ -146,6 +170,14 @@ function updateBullets(deltaTime) {
   }
 
   game.bullets = game.bullets.filter((bullet) => bullet.y + bullet.height > 0);
+}
+
+function updateEggs(deltaTime) {
+  for (const egg of game.eggs) {
+    egg.y += egg.speed * deltaTime;
+  }
+
+  game.eggs = game.eggs.filter((egg) => egg.y - egg.height / 2 < canvas.height);
 }
 
 function objectsOverlap(first, second) {
@@ -209,6 +241,20 @@ function updateEnemies(deltaTime) {
       enemy.y += 18;
     }
   }
+
+  game.enemyShootTimer -= deltaTime;
+
+  if (game.enemyShootTimer <= 0) {
+    const shooter = game.enemies[Math.floor(Math.random() * game.enemies.length)];
+    game.eggs.push({
+      x: shooter.x,
+      y: shooter.y + shooter.height / 2,
+      width: 24,
+      height: 32,
+      speed: 210,
+    });
+    game.enemyShootTimer = 1.2;
+  }
 }
 
 function drawEnemies() {
@@ -250,6 +296,22 @@ function drawStartText() {
   ctx.textAlign = "left";
 }
 
+function checkEggPlayerCollisions() {
+  if (game.player.invincibleTimer > 0) return;
+
+  for (let eggIndex = game.eggs.length - 1; eggIndex >= 0; eggIndex -= 1) {
+    const egg = game.eggs[eggIndex];
+
+    if (!objectsOverlap(egg, game.player)) continue;
+
+    game.eggs.splice(eggIndex, 1);
+    game.health -= 1;
+    game.player.invincibleTimer = 1.2;
+    statusText.textContent = `Player hit. Health left: ${game.health}.`;
+    break;
+  }
+}
+
 function resetGame() {
   game.state = "playing";
   game.score = 0;
@@ -257,10 +319,13 @@ function resetGame() {
   game.level = 1;
   game.timeLeft = 180;
   game.bullets = [];
+  game.eggs = [];
   game.enemyDirection = 1;
+  game.enemyShootTimer = 1.5;
   game.player.x = canvas.width / 2;
   game.player.y = canvas.height - 90;
   game.player.shootCooldown = 0;
+  game.player.invincibleTimer = 0;
   createEnemyWave();
 }
 
@@ -280,6 +345,12 @@ function updateGameState(deltaTime) {
     startButton.textContent = "Try Again";
     statusText.textContent = "Time is over. Restart and try to clear the wave faster.";
   }
+
+  if (game.health <= 0) {
+    game.state = "lost";
+    startButton.textContent = "Try Again";
+    statusText.textContent = "Health is 0. Restart and dodge the eggs.";
+  }
 }
 
 function render() {
@@ -287,6 +358,7 @@ function render() {
   drawHud();
   drawEnemies();
   drawBullets();
+  drawEggs();
   drawPlayer();
   drawStartText();
 }
@@ -297,8 +369,10 @@ function gameLoop(currentTime) {
 
   updatePlayer(deltaTime);
   updateBullets(deltaTime);
+  updateEggs(deltaTime);
   updateEnemies(deltaTime);
   checkBulletEnemyCollisions();
+  checkEggPlayerCollisions();
   updateGameState(deltaTime);
   render();
   requestAnimationFrame(gameLoop);

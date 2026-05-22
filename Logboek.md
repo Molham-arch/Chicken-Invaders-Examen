@@ -79,3 +79,15 @@
 **Resultaat:** De game heeft nu een duidelijk begin, speelstatus, win condition, lose condition en restart mogelijkheid. Dit vult meerdere Must-eisen uit de backlog in.
 
 **Volgende stap:** Health en vijandelijke eieren toevoegen, zodat de speler ook door vijanden geraakt kan worden.
+
+## Zaterdag 23 mei 2026
+
+**Werk:** Vijandelijke eieren en health damage toegevoegd. Kippen kunnen nu eieren naar beneden laten vallen en de speler verliest health wanneer hij geraakt wordt.
+
+**Keuze:** Ik gebruik dezelfde rectangle-collision aanpak als bij bullets en enemies. Na een hit krijgt de speler kort invincibility, zodat health niet direct meerdere keren tegelijk omlaag gaat.
+
+**Resultaat:** Health heeft nu echte gameplay-betekenis. De speler kan winnen door alle kippen te raken en verliezen door tijd of door health op 0.
+
+**Planning aangepast:** Ik wil zondag de basisversie afronden. Vanaf maandag tot vrijdag werk ik aan kleinere upgrades, zoals volume/difficulty settings, Electron fullscreen, een level-select scherm met locked levels en polish voor de presentatie.
+
+**Volgende stap:** Basisversie afronden met level 1 en level 2, zodat de Musts en Shoulds duidelijker zichtbaar zijn.
