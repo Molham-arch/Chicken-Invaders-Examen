@@ -91,3 +91,13 @@
 **Planning aangepast:** Ik wil zondag de basisversie afronden. Vanaf maandag tot vrijdag werk ik aan kleinere upgrades, zoals volume/difficulty settings, Electron fullscreen, een level-select scherm met locked levels en polish voor de presentatie.
 
 **Volgende stap:** Basisversie afronden met level 1 en level 2, zodat de Musts en Shoulds duidelijker zichtbaar zijn.
+
+## Zondag 24 mei 2026
+
+**Werk:** Level progression toegevoegd. Na het uitspelen van level 1 start nu automatisch level 2.
+
+**Keuze:** Level 2 heeft meer kippen, twee rijen vijanden, snellere beweging en sneller vallende eieren. Daardoor wordt de game moeilijker en voldoet de game ook aan de Should-eis dat de moeilijkheid oploopt.
+
+**Resultaat:** De basisversie heeft nu twee levels. De speler wint pas wanneer level 2 volledig is gehaald.
+
+**Volgende stap:** Vanaf maandag werk ik aan kleine upgrades en polish, zoals volume/difficulty settings, Electron fullscreen en een level-select scherm.

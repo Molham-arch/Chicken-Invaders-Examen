@@ -198,7 +198,7 @@ function checkBulletEnemyCollisions() {
 
       game.bullets.splice(bulletIndex, 1);
       game.enemies.splice(enemyIndex, 1);
-      game.score += 100;
+      game.score += game.level === 1 ? 100 : 150;
       break;
     }
   }
@@ -207,17 +207,23 @@ function checkBulletEnemyCollisions() {
 function createEnemyWave() {
   game.enemies = [];
 
-  const columns = 6;
-  const startX = canvas.width / 2 - ((columns - 1) * 110) / 2;
+  const columns = game.level === 1 ? 6 : 7;
+  const rows = game.level === 1 ? 1 : 2;
+  const gapX = 110;
+  const gapY = 76;
+  const startX = canvas.width / 2 - ((columns - 1) * gapX) / 2;
+  const startY = game.level === 1 ? 96 : 74;
 
-  for (let i = 0; i < columns; i += 1) {
-    game.enemies.push({
-      x: startX + i * 110,
-      y: 96,
-      width: 74,
-      height: 60,
-      speed: 80,
-    });
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      game.enemies.push({
+        x: startX + column * gapX,
+        y: startY + row * gapY,
+        width: 74,
+        height: 60,
+        speed: game.level === 1 ? 80 : 105,
+      });
+    }
   }
 }
 
@@ -251,9 +257,9 @@ function updateEnemies(deltaTime) {
       y: shooter.y + shooter.height / 2,
       width: 24,
       height: 32,
-      speed: 210,
+      speed: game.level === 1 ? 210 : 260,
     });
-    game.enemyShootTimer = 1.2;
+    game.enemyShootTimer = game.level === 1 ? 1.2 : 0.85;
   }
 }
 
@@ -329,15 +335,35 @@ function resetGame() {
   createEnemyWave();
 }
 
+function startNextLevel() {
+  game.level += 1;
+  game.timeLeft = 150;
+  game.bullets = [];
+  game.eggs = [];
+  game.enemyDirection = 1;
+  game.enemyShootTimer = 1;
+  game.player.x = canvas.width / 2;
+  game.player.y = canvas.height - 90;
+  game.player.shootCooldown = 0;
+  game.player.invincibleTimer = 0.8;
+  createEnemyWave();
+  statusText.textContent = "Level 2 started. Faster enemies and more eggs.";
+}
+
 function updateGameState(deltaTime) {
   if (game.state !== "playing") return;
 
   game.timeLeft = Math.max(0, game.timeLeft - deltaTime);
 
-  if (game.enemies.length === 0) {
+  if (game.enemies.length === 0 && game.level === 1) {
+    startNextLevel();
+    return;
+  }
+
+  if (game.enemies.length === 0 && game.level === 2) {
     game.state = "won";
     startButton.textContent = "Play Again";
-    statusText.textContent = "You defeated all chickens. You can restart the game.";
+    statusText.textContent = "You completed both levels. You can restart the game.";
   }
 
   if (game.timeLeft <= 0) {
