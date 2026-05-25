@@ -7,6 +7,7 @@ function createWindow() {
     height: 720,
     minWidth: 900,
     minHeight: 560,
+    fullscreen: true,
     backgroundColor: "#09061c",
     autoHideMenuBar: true,
     webPreferences: {
@@ -16,6 +17,19 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, "index.html"));
+
+  win.webContents.on("before-input-event", (event, input) => {
+    if (input.type !== "keyDown") return;
+
+    if (input.key === "F11") {
+      win.setFullScreen(!win.isFullScreen());
+      event.preventDefault();
+    }
+
+    if (input.key === "Escape" && win.isFullScreen()) {
+      win.setFullScreen(false);
+    }
+  });
 }
 
 app.whenReady().then(createWindow);

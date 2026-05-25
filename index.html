@@ -10,10 +10,71 @@
     <main class="game-shell">
       <canvas id="gameCanvas" width="1280" height="720"></canvas>
 
-      <section class="panel">
-        <h1>Chicken Invaders</h1>
-        <p id="statusText">Starter project is ready. Gameplay will be added step by step.</p>
-        <button id="startButton">Start Preview</button>
+      <section id="menuOverlay" class="menu-overlay">
+        <div class="menu-card">
+          <img
+            class="brand-logo"
+            src="assets/Bijlage%202%20-%20Logos/Bijlage%202%20-%20Logo.png"
+            alt="Best Education logo"
+          />
+          <p class="eyebrow">Best Education</p>
+          <h1 id="menuTitle">Chicken Invaders</h1>
+          <p id="statusText" class="credit-text">Developed by Molham Alam</p>
+
+          <div id="mainPanel" class="menu-actions">
+            <button id="startButton" type="button">Start Game</button>
+            <button id="continueButton" type="button" disabled>Continue</button>
+            <button id="optionsButton" type="button">Options</button>
+            <button id="exitButton" type="button">Exit</button>
+          </div>
+
+          <div id="levelPanel" class="level-panel" hidden>
+            <div class="level-grid" aria-label="Level select">
+              <button class="level-tile is-open" type="button" data-level="1">
+                <span class="level-number">1</span>
+                <span class="stars">***</span>
+              </button>
+              <button class="level-tile is-open" type="button" data-level="2">
+                <span class="level-number">2</span>
+                <span class="stars">***</span>
+              </button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+              <button class="level-tile is-locked" type="button" disabled><span class="lock-shape"></span></button>
+            </div>
+
+            <button id="levelBackButton" class="back-menu-button" type="button">Back</button>
+          </div>
+
+          <div id="optionsPanel" class="options-panel" hidden>
+            <label>
+              Volume
+              <input id="volumeSlider" type="range" min="0" max="100" value="45" />
+            </label>
+
+            <label>
+              Difficulty
+              <select id="difficultySelect">
+                <option value="easy">Easy</option>
+                <option value="normal" selected>Normal</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+
+            <button id="backButton" type="button">Back</button>
+          </div>
+
+          <div class="controls">
+            <span>Move: WASD / Arrows</span>
+            <span>Shoot: Space</span>
+            <span>Pause/Menu: Esc / P</span>
+          </div>
+        </div>
       </section>
     </main>
 

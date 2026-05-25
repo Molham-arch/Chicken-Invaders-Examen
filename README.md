@@ -1,32 +1,39 @@
-# Chicken Invaders
+# 🐔 Chicken Invaders - Exam Edition
 
-Small HTML/CSS/JavaScript arcade game made for the game exam project.
+A small HTML/CSS/JavaScript arcade game made for the game development exam project.
 
-## Current Status
+Developed by **Molham Alam**.
 
-This first version contains the project setup, assets, documentation, and a starter canvas preview.
+## 🎮 Features
 
-Gameplay will be added step by step during the exam period:
+- 2 playable levels
+- Level-select screen with locked future levels
+- Score, health, timer, pause, win and game-over screens
+- Chicken enemies, falling eggs, shooting and collisions
+- Power-up drop with triple shot for a short time
+- Sound effects, background music, volume setting and difficulty setting
+- Electron support so the game can run as a Windows `.exe`
 
-- player movement
-- shooting
-- enemy waves
-- score, health, timer
-- two levels
-- sounds and effects
-- Electron `.exe` build
+## 🕹️ Controls
 
-## Controls Planned
+- Move: `WASD`, arrow keys, mouse, or touch
+- Shoot: `Space` or hold mouse/touch on the game screen
+- Pause/Menu: `P` or `Esc`
+- Electron fullscreen toggle: `F11`
 
-- Move: `WASD`, arrow keys, or mouse/touch.
-- Shoot: `Space`.
-- Pause: `P`.
+## 📦 Install From GitHub
 
-## Run In Browser
+Clone the repository:
 
-Open `index.html` in a browser.
+```powershell
+git clone https://github.com/Molham-arch/Chicken-Invaders-Examen.git
+```
 
-## Electron Later
+Go into the project folder:
+
+```powershell
+cd Chicken-Invaders-Examen
+```
 
 Install dependencies:
 
@@ -34,8 +41,50 @@ Install dependencies:
 npm install
 ```
 
-Start the Electron app:
+## 🌐 Run In Browser
+
+Open `index.html` directly in a browser.
+
+## 🖥️ Run With Electron
+
+Start the desktop app:
 
 ```powershell
 npm start
 ```
+
+The Electron app opens in fullscreen.
+
+## 🧱 Build The `.exe`
+
+Build a portable Windows executable:
+
+```powershell
+npm run build:exe
+```
+
+The output will be created in the `dist` folder.
+
+Build an installer:
+
+```powershell
+npm run build:installer
+```
+
+## 📁 Project Structure
+
+```text
+web-game/
+├── assets/
+│   ├── audio/
+│   ├── sprites/
+│   └── Bijlage 2 - Logos/
+├── docs/
+├── electron-main.js
+├── game.js
+├── index.html
+├── styles.css
+├── package.json
+└── README.md
+```
+

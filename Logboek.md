@@ -101,3 +101,13 @@
 **Resultaat:** De basisversie heeft nu twee levels. De speler wint pas wanneer level 2 volledig is gehaald.
 
 **Volgende stap:** Vanaf maandag werk ik aan kleine upgrades en polish, zoals volume/difficulty settings, Electron fullscreen en een level-select scherm.
+
+## Maandag 25 mei 2026
+
+**Werk:** Menu en polish verbeterd. Er is een startmenu gemaakt met aparte schermen voor level select en options. Level 1 en level 2 zijn speelbaar en de overige levels staan als locked tiles klaar voor later. Ook zijn volume, difficulty, power-up triple shot, pauzeren met `P`/`Esc`, muis/touch-besturing en Electron fullscreen toegevoegd of verbeterd.
+
+**Keuze:** Ik heb de options niet als dropdown onder het hoofdmenu gelaten, maar als eigen scherm gemaakt. Dit ziet netter uit en past beter bij het level-select menu. Difficulty is simpel gehouden: op Easy bewegen kippen rustiger en vallen er minder eieren, op Hard bewegen kippen sneller en vallen er meer eieren.
+
+**Resultaat:** De game voelt meer als een complete app: de speler kan levels kiezen, instellingen aanpassen, met keyboard/muis/touch spelen en de Electron-versie opent fullscreen. De README is bijgewerkt met installatie, controls, run-instructies en build-stappen.
+
+**Volgende stap:** Testen of alles goed werkt in browser en Electron. Daarna kleine bugs oplossen.
