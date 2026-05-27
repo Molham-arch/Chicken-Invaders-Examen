@@ -70,6 +70,20 @@ canvas {
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.45);
 }
 
+.developer-credit {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  margin: 0;
+  color: #d7a7ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 700;
+  text-align: right;
+  text-shadow: 0 0 18px rgba(178, 92, 255, 0.7);
+}
+
 .brand-logo {
   display: block;
   width: 168px;
@@ -299,5 +313,11 @@ input[type="range"] {
 
   h1 {
     font-size: 2rem;
+  }
+
+  .developer-credit {
+    position: static;
+    margin-bottom: 12px;
+    text-align: left;
   }
 }

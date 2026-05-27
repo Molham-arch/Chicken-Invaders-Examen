@@ -18,6 +18,9 @@ const levelButtons = document.querySelectorAll("[data-level]");
 const statusText = document.querySelector("#statusText");
 const pressedKeys = new Set();
 const creditText = "Developed by Molham Alam";
+const sloganText = "Wij lanceren je de toekomst in!";
+
+// Pointer is used for mouse and touch movement.
 const pointer = {
   active: false,
   isDown: false,
@@ -25,6 +28,7 @@ const pointer = {
   y: canvas.height - 90,
 };
 
+// Central game state. Most functions read or update this object.
 const game = {
   state: "menu",
   score: 0,
@@ -52,6 +56,7 @@ const game = {
   },
 };
 
+// Image assets are loaded once and then reused while drawing the canvas.
 const assets = {
   background: loadImage("assets/sprites/background.png"),
   ship: loadImage("assets/sprites/spaceship.png"),
@@ -61,6 +66,7 @@ const assets = {
   power: loadImage("assets/sprites/hero.png"),
 };
 
+// Audio assets are controlled through the volume slider in the options menu.
 const sounds = {
   music: loadAudio("assets/audio/Background.mp3", true),
   shoot: loadAudio("assets/audio/Shoot.ogg"),
@@ -93,6 +99,7 @@ function setVolume(value) {
 function playSound(sound) {
   sound.currentTime = 0;
   sound.play().catch(() => {
+    // Browsers only allow audio after a user interaction.
     statusText.textContent = "Click Start Game once to enable browser audio.";
   });
 }
@@ -140,6 +147,9 @@ function drawHud() {
   ctx.fillStyle = "#d7a7ff";
   ctx.font = "italic bold 18px Georgia";
   ctx.fillText(creditText, canvas.width - 40, 84);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
+  ctx.font = "italic 15px Georgia";
+  ctx.fillText(sloganText, canvas.width - 40, 108);
   ctx.textAlign = "left";
 }
 
@@ -238,6 +248,7 @@ function updatePlayer(deltaTime) {
 
   const hasKeyboardMovement = directionX !== 0 || directionY !== 0;
 
+  // Mouse/touch movement follows the pointer when no keyboard key is pressed.
   if (!hasKeyboardMovement && pointer.active) {
     const followSpeed = Math.min(1, deltaTime * 14);
     player.x += (pointer.x - player.x) * followSpeed;
@@ -270,6 +281,7 @@ function shootBullet() {
   const { player } = game;
   if (game.state !== "playing" || player.shootCooldown > 0) return;
 
+  // The power-up temporarily changes one bullet into three bullets.
   const offsets = player.powerTimer > 0 ? [-22, 0, 22] : [0];
 
   for (const offset of offsets) {
@@ -317,6 +329,7 @@ function updatePowerups(deltaTime) {
 }
 
 function objectsOverlap(first, second) {
+  // Simple rectangle collision works well for this 2D arcade game.
   return (
     Math.abs(first.x - second.x) < (first.width + second.width) / 2 &&
     Math.abs(first.y - second.y) < (first.height + second.height) / 2
@@ -326,6 +339,7 @@ function objectsOverlap(first, second) {
 function checkBulletEnemyCollisions() {
   if (game.state !== "playing") return;
 
+  // Loop backwards because objects are removed from the arrays after a hit.
   for (let bulletIndex = game.bullets.length - 1; bulletIndex >= 0; bulletIndex -= 1) {
     const bullet = game.bullets[bulletIndex];
 
@@ -345,6 +359,7 @@ function checkBulletEnemyCollisions() {
 }
 
 function maybeDropPowerup(x, y) {
+  // Not every chicken drops a power-up, otherwise the game becomes too easy.
   const dropChance = game.level === 1 ? 0.28 : 0.34;
 
   if (Math.random() > dropChance) return;
@@ -359,6 +374,7 @@ function maybeDropPowerup(x, y) {
 }
 
 function getDifficultySettings() {
+  // Difficulty changes enemy speed, egg speed, egg frequency and available time.
   if (game.difficulty === "easy") {
     return { enemySpeed: 0.75, eggSpeed: 0.8, eggTimer: 1.7, timeBonus: 30 };
   }
@@ -381,6 +397,7 @@ function createEnemyWave() {
   const startX = canvas.width / 2 - ((columns - 1) * gapX) / 2;
   const startY = game.level === 1 ? 96 : 74;
 
+  // Enemies are stored as objects so movement and collision can update them later.
   for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns; column += 1) {
       game.enemies.push({
@@ -410,6 +427,7 @@ function updateEnemies(deltaTime) {
   if (shouldTurn) {
     game.enemyDirection *= -1;
 
+    // When the wave hits a side, it turns around and moves slightly lower.
     for (const enemy of game.enemies) {
       enemy.y += 18;
     }
@@ -505,6 +523,7 @@ function checkPowerupPlayerCollisions() {
 }
 
 function resetGame(startLevel = 1) {
+  // Reset all temporary objects so a new level starts cleanly.
   const settings = getDifficultySettings();
   game.state = "playing";
   game.score = 0;
@@ -550,6 +569,7 @@ function updateGameState(deltaTime) {
 
   game.timeLeft = Math.max(0, game.timeLeft - deltaTime);
 
+  // Level 1 automatically continues into level 2.
   if (game.enemies.length === 0 && game.level === 1) {
     startNextLevel();
     return;
@@ -593,6 +613,7 @@ function render() {
 }
 
 function gameLoop(currentTime) {
+  // Delta time keeps movement stable on faster and slower computers.
   const deltaTime = Math.min(0.033, (currentTime - game.lastTime) / 1000 || 0);
   game.lastTime = currentTime;
 
@@ -614,7 +635,8 @@ function hideMenu() {
   menuOverlay.setAttribute("aria-hidden", "true");
 }
 
-function showMenu(title = "Chicken Invaders", message = creditText) {
+function showMenu(title = "Chicken Invaders", message = sloganText) {
+  // Reset menu panels so the player always returns to the main menu first.
   menuTitle.textContent = title;
   statusText.textContent = message;
   mainPanel.hidden = false;
@@ -658,6 +680,7 @@ function continueGame() {
 }
 
 function getCanvasPoint(event) {
+  // Convert screen coordinates to the fixed 1280x720 canvas coordinate system.
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
   const scaleY = canvas.height / rect.height;
@@ -691,7 +714,7 @@ backButton.addEventListener("click", () => {
   optionsPanel.hidden = true;
   mainPanel.hidden = false;
   menuTitle.textContent = "Chicken Invaders";
-  statusText.textContent = creditText;
+  statusText.textContent = sloganText;
 });
 
 levelBackButton.addEventListener("click", () => {

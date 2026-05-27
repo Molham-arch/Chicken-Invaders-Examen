@@ -111,3 +111,47 @@
 **Resultaat:** De game voelt meer als een complete app: de speler kan levels kiezen, instellingen aanpassen, met keyboard/muis/touch spelen en de Electron-versie opent fullscreen. De README is bijgewerkt met installatie, controls, run-instructies en build-stappen.
 
 **Volgende stap:** Testen of alles goed werkt in browser en Electron. Daarna kleine bugs oplossen.
+
+## Dinsdag 26 mei 2026
+
+**Werk:** Gesprek gehad met mevrouw Jacobs over de voortgang van de game. Ik heb de huidige versie laten zien met het startmenu, level select, options, twee levels, score, health, timer en de Electron-aanpak.
+
+**Feedback:** Het gesprek ging goed en mevrouw Jacobs was enthousiast over de voortgang. Er zijn nog een paar punten om te verbeteren, zoals de slogan duidelijk terugzetten in de game en paar kleine bugs oplossen.
+
+**Resultaat:** De richting van de game is goedgekeurd voor de laatste fase. Ik weet nu welke polish-punten ik nog moet afronden voor het inleveren.
+
+**Volgende stap:** Op donderdag is er nog een laatste gesprek voor de inlevering. Voor die tijd werk ik aan de slogan, kleine bugfixes, laatste tests in browser/Electron en de presentatiebestanden.
+
+
+
+## Testverslagen
+
+### Testverslag 1 - Zondag 24 mei 2026, 13:20
+
+**Tester:** Mohammed
+
+**Wat is getest:** Browser-versie van de game met level 1, level 2, score, health, timer, shooting, enemy eggs en power-up.
+
+**Bevindingen gebruiker:** Mohammed vond de game leuk en duidelijk speelbaar. Hij vond vooral het schieten en de power-up goed werken. Zijn feedback was dat de game iets moeilijker mocht worden, omdat level 1 redelijk makkelijk was wanneer je eenmaal wist hoe je moest bewegen.
+
+**Verbetering na de test:** De difficulty-instelling is duidelijker gemaakt. Op `Hard` bewegen de kippen sneller en laten ze vaker eieren vallen. Hierdoor kan de speler zelf kiezen of de game makkelijker of moeilijker moet zijn.
+
+### Testverslag 2 - Maandag 25 mei 2026, 14:05
+
+**Tester:** Abdullah
+
+**Wat is getest:** Menu, level-select scherm, options scherm, keyboard-besturing, muis/touch-besturing en pause met `P`/`Esc`.
+
+**Bevindingen gebruiker:** Abdullah vond het menu overzichtelijker nadat level select en options aparte schermen kregen. Hij merkte op dat de slogan en developer-credit duidelijk zichtbaar moesten blijven, omdat dit belangrijk is voor de presentatie. Ook gaf hij aan dat muisbesturing handig is, maar dat de speler goed binnen het scherm moet blijven.
+
+**Verbetering na de test:** De slogan `Wij lanceren je de toekomst in!` is teruggezet in het menu en in de game. `Developed by Molham Alam` is rechtsboven in de menu-card toegevoegd. De muis/touch-besturing is begrensd binnen het speelveld, zodat het ruimteschip niet buiten beeld kan bewegen.
+
+### Testverslag 3 - Dinsdag 26 mei 2026, 10:15
+
+**Tester:** Mevrouw Jacobs
+
+**Wat is getest:** Voortgang van het project, game concept, menu, levels, documentatie en planning richting inlevermoment.
+
+**Bevindingen gebruiker:** Mevrouw Jacobs was enthousiast over de voortgang en vond dat de game al duidelijk richting een complete examenversie ging. De belangrijkste feedback was om de laatste polish goed af te ronden, de slogan netjes zichtbaar te maken en kleine bugs voor de inlevering op te lossen.
+
+**Verbetering na de test:** De feedback is verwerkt in de planning. Voor donderdag staat nog een laatste gesprek gepland voor de inlevering. Tot die tijd werk ik aan laatste bugfixes, testen in browser/Electron en het netjes maken van de presentatiebestanden.
