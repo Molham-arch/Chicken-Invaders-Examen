@@ -71,6 +71,20 @@ Build an installer:
 npm run build:installer
 ```
 
+## 🚀 Download Installer From GitHub Release
+
+The easiest way to test the game is to download the installer from the GitHub Release page.
+
+Steps:
+
+1. Open the GitHub repository.
+2. Go to `Releases`.
+3. Open the latest release, for example `v1.0.0`.
+4. Download `Chicken-Invaders-Exam-Edition-Setup.exe`.
+5. Run the setup and start the game.
+
+This option does not require `npm install` or opening the source code.
+
 ## 📁 Project Structure
 
 ```text
@@ -87,4 +101,3 @@ web-game/
 ├── package.json
 └── README.md
 ```
-
