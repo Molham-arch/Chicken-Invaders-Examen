@@ -112,13 +112,21 @@ p {
   line-height: 1.45;
 }
 
-.credit-text {
+.brand-slogan {
+  margin-bottom: 12px;
   color: #d7a7ff;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-style: italic;
   font-weight: 700;
   text-shadow: 0 0 18px rgba(178, 92, 255, 0.7);
+}
+
+.menu-message {
+  min-height: 24px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.98rem;
 }
 
 .menu-actions,

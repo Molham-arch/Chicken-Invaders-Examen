@@ -122,6 +122,16 @@
 
 **Volgende stap:** Op donderdag is er nog een laatste gesprek voor de inlevering. Voor die tijd werk ik aan de slogan, kleine bugfixes, laatste tests in browser/Electron en de presentatiebestanden.
 
+## Donderdag 28 mei 2026
+
+**Werk:** Laatste gesprek gehad met mevrouw Jacobs om 09:00. Ik heb de bijna afgeronde versie van de game besproken en laten zien wat er sinds het vorige gesprek is verbeterd.
+
+**Feedback:** Het gesprek ging goed. Mevrouw Jacobs gaf vooral aan dat de slogan `Wij lanceren je de toekomst in!` overal duidelijk zichtbaar moet blijven, dus ook in de game zelf en wanneer de game gepauzeerd is.
+
+**Resultaat:** De slogan is als vaste tekst in het menu gezet, los van de statusmeldingen. Daardoor blijft de slogan zichtbaar in het hoofdmenu, level-select, options en pause-scherm. In de game zelf staat de slogan ook rechtsboven in de HUD.
+
+**Volgende stap:** Laatste controle uitvoeren daarna inleveren.
+
 
 
 ## Testverslagen
@@ -155,3 +165,13 @@
 **Bevindingen gebruiker:** Mevrouw Jacobs was enthousiast over de voortgang en vond dat de game al duidelijk richting een complete examenversie ging. De belangrijkste feedback was om de laatste polish goed af te ronden, de slogan netjes zichtbaar te maken en kleine bugs voor de inlevering op te lossen.
 
 **Verbetering na de test:** De feedback is verwerkt in de planning. Voor donderdag staat nog een laatste gesprek gepland voor de inlevering. Tot die tijd werk ik aan laatste bugfixes, testen in browser/Electron en het netjes maken van de presentatiebestanden.
+
+### Testverslag 4 - Donderdag 28 mei 2026, 09:00
+
+**Tester:** Mevrouw Jacobs
+
+**Wat is getest:** Laatste bespreekversie van de game, menu, pause-scherm, branding, slogan, HUD en voorbereiding voor de inlevering.
+
+**Bevindingen gebruiker:** Mevrouw Jacobs vond dat de game goed op weg was voor de inlevering. De belangrijkste feedback was dat de slogan van Best Education overal zichtbaar moest blijven, ook wanneer de game gepauzeerd wordt.
+
+**Verbetering na de test:** De slogan `Wij lanceren je de toekomst in!` is als vaste menu-regel toegevoegd en blijft zichtbaar naast de wisselende statusmeldingen. Ook in de game-HUD blijft de slogan rechtsboven zichtbaar.

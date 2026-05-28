@@ -17,8 +17,8 @@ const levelBackButton = document.querySelector("#levelBackButton");
 const levelButtons = document.querySelectorAll("[data-level]");
 const statusText = document.querySelector("#statusText");
 const pressedKeys = new Set();
-const creditText = "Developed by Molham Alam";
 const sloganText = "Wij lanceren je de toekomst in!";
+const creditText = "Developed by Molham Alam";
 
 // Pointer is used for mouse and touch movement.
 const pointer = {
@@ -64,6 +64,7 @@ const assets = {
   bullet: loadImage("assets/sprites/bullet.png"),
   egg: loadImage("assets/sprites/egg.png"),
   power: loadImage("assets/sprites/hero.png"),
+  brandLogo: loadImage("assets/Bijlage 2 - Logos/Bijlage 2 - Logo zonder text.png"),
 };
 
 // Audio assets are controlled through the volume slider in the options menu.
@@ -140,17 +141,28 @@ function drawHud() {
     ctx.fillText(`Triple Shot: ${game.player.powerTimer.toFixed(1)}s`, 40, 178);
   }
 
+  ctx.save();
   ctx.textAlign = "right";
+
+  if (assets.brandLogo.complete) {
+    const logoSize = 58;
+    ctx.drawImage(assets.brandLogo, canvas.width - logoSize - 40, 22, logoSize, logoSize);
+  }
+
+  ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
+  ctx.shadowBlur = 8;
   ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
   ctx.font = "bold 20px Arial";
-  ctx.fillText("Best Education", canvas.width - 40, 58);
+  ctx.fillText("Best Education", canvas.width - 40, 98);
   ctx.fillStyle = "#d7a7ff";
+  ctx.shadowColor = "rgba(178, 92, 255, 0.65)";
+  ctx.shadowBlur = 14;
   ctx.font = "italic bold 18px Georgia";
-  ctx.fillText(creditText, canvas.width - 40, 84);
-  ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
-  ctx.font = "italic 15px Georgia";
-  ctx.fillText(sloganText, canvas.width - 40, 108);
-  ctx.textAlign = "left";
+  ctx.fillText(creditText, canvas.width - 40, 124);
+  ctx.fillStyle = "#f0dcff";
+  ctx.font = "italic bold 16px Georgia";
+  ctx.fillText(sloganText, canvas.width - 40, 150);
+  ctx.restore();
 }
 
 function drawPlayer() {
@@ -635,7 +647,7 @@ function hideMenu() {
   menuOverlay.setAttribute("aria-hidden", "true");
 }
 
-function showMenu(title = "Chicken Invaders", message = sloganText) {
+function showMenu(title = "Chicken Invaders", message = "Choose a level, change options, or start playing.") {
   // Reset menu panels so the player always returns to the main menu first.
   menuTitle.textContent = title;
   statusText.textContent = message;
@@ -714,7 +726,7 @@ backButton.addEventListener("click", () => {
   optionsPanel.hidden = true;
   mainPanel.hidden = false;
   menuTitle.textContent = "Chicken Invaders";
-  statusText.textContent = sloganText;
+  statusText.textContent = "Choose a level, change options, or start playing.";
 });
 
 levelBackButton.addEventListener("click", () => {
