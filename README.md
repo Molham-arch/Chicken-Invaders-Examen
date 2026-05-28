@@ -101,3 +101,11 @@ web-game/
 ├── package.json
 └── README.md
 ```
+
+## 🛠️ Handover For Further Development
+
+The main game logic is in `game.js`. This file contains the game state, player movement, shooting, enemies, collisions, levels, power-ups, menu flow and difficulty settings. The layout is in `index.html`, and the visual style of the menus/buttons is in `styles.css`. Electron starts the desktop version through `electron-main.js`.
+
+A new engineer can continue by first running the browser version with `index.html` and then testing the desktop version with `npm start`. New sprites or sounds should be added inside `assets/`. Extra levels can be added by extending the level-select menu in `index.html` and updating the enemy wave logic in `createEnemyWave()` in `game.js`.
+
+Good next improvements are: more levels, a boss enemy, better animations, a local high-score screen, extra power-ups, and a settings screen with more options. The current `Could` and `Would` backlog items are not implemented yet and can be used as future tasks, such as an online scoreboard or multiplayer.
